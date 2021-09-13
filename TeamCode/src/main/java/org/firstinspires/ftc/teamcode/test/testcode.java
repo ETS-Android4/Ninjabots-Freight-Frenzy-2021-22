@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.test;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -44,6 +44,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 @Autonomous(name = "Test Code", group = "Test")
+@Disabled
 public class testcode extends LinearOpMode {
 
     // Declare OpMode members.
