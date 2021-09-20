@@ -9,8 +9,7 @@ public class drivetrain{
     private DcMotor fl, fr, bl, br;
     private double frpow, brpow, flpow, blpow;
     private double frontpow, backpow;
-    private HardwareMap hardwareMap;
-    public drivetrain(DcMotor.RunMode mode){
+    public drivetrain(DcMotor.RunMode mode, HardwareMap hardwareMap){
         this.fl = hardwareMap.get(DcMotor.class, "fl");
         this.fr = hardwareMap.get(DcMotor.class, "fr");
         this.bl = hardwareMap.get(DcMotor.class, "bl");

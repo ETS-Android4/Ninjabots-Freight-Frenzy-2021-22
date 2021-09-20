@@ -11,12 +11,12 @@ public class TeleOp extends OpMode {
     drivetrain Ninjabot;
     @Override
     public void init() {
-        Ninjabot = new drivetrain(DcMotor.RunMode.RUN_TO_POSITION);
+        Ninjabot = new drivetrain(DcMotor.RunMode.RUN_USING_ENCODER, hardwareMap);
     }
 
     @Override
     public void loop() {
-        if (gamepad1.left_stick_y == 0 && gamepad1.right_stick_y == 0){
+        if (gamepad1.left_stick_y == 0 && gamepad1.right_stick_y == 0 && gamepad1.right_trigger == 0 && gamepad1.left_trigger == 0){
             Ninjabot.StopMotors();
         }
         else{
