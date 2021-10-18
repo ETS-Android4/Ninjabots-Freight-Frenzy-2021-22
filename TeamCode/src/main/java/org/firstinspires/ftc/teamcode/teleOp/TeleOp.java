@@ -19,15 +19,40 @@ public class TeleOp extends OpMode {
         if (gamepad1.left_stick_y == 0 && gamepad1.right_stick_y == 0 && gamepad1.right_trigger == 0 && gamepad1.left_trigger == 0){
             Ninjabot.StopMotors();
         }
-        else{
+        else if (gamepad1.left_stick_y !=0 || gamepad1.right_stick_y != 0){
             Ninjabot.SetPower(gamepad1.left_stick_y, gamepad1.right_stick_y);
         }
 
-        if (gamepad1.right_trigger > 0.2){
+        else if (gamepad1.right_trigger > 0.2){
             Ninjabot.StrafeRight();
         }
         else if (gamepad1.left_trigger > 0.2){
             Ninjabot.StrafeLeft();
         }
+
+        if (gamepad1.dpad_left){
+            Ninjabot.SetServoPosition(0.0);
+        }
+        else if (gamepad1.dpad_right){
+            Ninjabot.SetServoPosition(1.0);
+        }
+        else{
+            Ninjabot.SetServoPosition(Ninjabot.servpos);
+        }
+
+        if (gamepad1.right_bumper){
+            Ninjabot.SetCrServoPower(1.0);
+        }
+        else if (gamepad1.left_bumper){
+            Ninjabot.SetCrServoPower(-1.0);
+        }
+        else{
+            Ninjabot.SetCrServoPower(0.0);
+        }
+        telemetry.addData("Br: ",Ninjabot.br.getCurrentPosition());
+        telemetry.addData("Br: ",Ninjabot.bl.getCurrentPosition());
+        telemetry.addData("Fr: ",Ninjabot.fr.getCurrentPosition());
+        telemetry.addData("FL: ",Ninjabot.fl.getCurrentPosition());
+
     }
 }

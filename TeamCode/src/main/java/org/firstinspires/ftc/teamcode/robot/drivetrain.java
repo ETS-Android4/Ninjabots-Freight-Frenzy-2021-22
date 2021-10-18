@@ -1,26 +1,38 @@
 package org.firstinspires.ftc.teamcode.robot;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 
 public class drivetrain{
-    private DcMotor fl, fr, bl, br;
+    public double crservopower;
+    public double servpos;
+    public DcMotor br;
+    public DcMotor bl;
+    public DcMotor fr;
+    public DcMotor fl;
+    //private DcMotor fl, fr, bl, br;
     private double frpow, brpow, flpow, blpow;
     private double frontpow, backpow;
+    private Servo servo;
+    private CRServo crservo;
     public drivetrain(DcMotor.RunMode mode, HardwareMap hardwareMap){
         this.fl = hardwareMap.get(DcMotor.class, "fl");
         this.fr = hardwareMap.get(DcMotor.class, "fr");
         this.bl = hardwareMap.get(DcMotor.class, "bl");
         this.br = hardwareMap.get(DcMotor.class, "br");
+        this.servo = hardwareMap.get(Servo.class, "servo");
+        this.crservo = hardwareMap.get(CRServo.class, "crservo");
 
         this.bl.setMode(mode);
         this.br.setMode(mode);
         this.fl.setMode(mode);
         this.fr.setMode(mode);
 
-        this.br.setDirection(DcMotorSimple.Direction.REVERSE);
+        //this.br.setDirection(DcMotorSimple.Direction.REVERSE);
         this.fr.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //Init Power for Motors
@@ -32,12 +44,16 @@ public class drivetrain{
         //Init Default Power
         this.frontpow = 0.7;
         this.backpow = -0.7;
+
+        // Servo Power + Position
+        this.crservopower = 0.0;
+        this.servpos = 0.5;
     }
     public void StrafeLeft(){
-        this.blpow = this.frontpow;
-        this.flpow = this.backpow;
-        this.frpow = this.frontpow;
-        this.brpow = this.backpow;
+        this.blpow = this.backpow;
+        this.flpow = this.frontpow;
+        this.frpow = this.backpow;
+        this.brpow = this.frontpow;
         SetPower();
     }
 
@@ -51,7 +67,7 @@ public class drivetrain{
 
     private void SetPower(){
         this.fl.setPower(this.flpow);
-        this.br.setPower(this.brpow);
+        this.br.setPower(this.brpow * 0.95238095238);
         this.bl.setPower(this.blpow);
         this.fr.setPower(this.frpow);
     }
@@ -70,5 +86,14 @@ public class drivetrain{
         this.brpow = 0;
         SetPower();
 
+
+    }
+    public void SetServoPosition(double servpos){
+        this.servpos = servpos;
+        servo.setPosition(servpos);
+    }
+    public void SetCrServoPower(double crservopower){
+        this.crservopower = crservopower;
+        crservo.setPower(crservopower);
     }
 }
