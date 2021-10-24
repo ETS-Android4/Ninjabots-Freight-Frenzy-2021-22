@@ -14,18 +14,14 @@ public class drivetrain{
     public DcMotor bl;
     public DcMotor fr;
     public DcMotor fl;
-    //private DcMotor fl, fr, bl, br;
     private double frpow, brpow, flpow, blpow;
-    private double frontpow, backpow;
-    private Servo servo;
-    private CRServo crservo;
+    private final double frontpow;
+    private final double backpow;
     public drivetrain(DcMotor.RunMode mode, HardwareMap hardwareMap){
         this.fl = hardwareMap.get(DcMotor.class, "fl");
         this.fr = hardwareMap.get(DcMotor.class, "fr");
         this.bl = hardwareMap.get(DcMotor.class, "bl");
         this.br = hardwareMap.get(DcMotor.class, "br");
-        this.servo = hardwareMap.get(Servo.class, "servo");
-        this.crservo = hardwareMap.get(CRServo.class, "crservo");
 
         this.bl.setMode(mode);
         this.br.setMode(mode);
@@ -88,12 +84,5 @@ public class drivetrain{
 
 
     }
-    public void SetServoPosition(double servpos){
-        this.servpos = servpos;
-        servo.setPosition(servpos);
-    }
-    public void SetCrServoPower(double crservopower){
-        this.crservopower = crservopower;
-        crservo.setPower(crservopower);
-    }
+
 }

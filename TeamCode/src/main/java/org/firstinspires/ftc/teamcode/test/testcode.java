@@ -41,32 +41,32 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.robot.TurnTable;
 
 
-@Autonomous(name = "Test Code", group = "Test")
-@Disabled
+@TeleOp(name = "Turn Table Test", group = "Test")
+
 public class testcode extends LinearOpMode {
+    TurnTable turnTable;
+    private double motorPower = 0.1;
+    @Override
+    public void runOpMode() throws InterruptedException {
+        this.turnTable = new TurnTable(hardwareMap);
+        waitForStart();
+        while(opModeIsActive()){
+            if (gamepad1.a){
+                motorPower += 0.001;
+            }
+            else if (gamepad1.b){
+                motorPower -= 0.001;
+            }
+            telemetry.addData("Motor Power: ", motorPower);
+            telemetry.update();
+            this.turnTable.setPower(motorPower);
+    }
 
     // Declare OpMode members.
-    Telemetry telemetry;
-    DcMotor LeftMotor;//bl
-    DcMotor RightMotor;//br
 
-    @Override
-    public void runOpMode() {
-        LeftMotor = hardwareMap.get(DcMotor.class, "bl");
-        RightMotor = hardwareMap.get(DcMotor.class, "br");
-
-        double speed = 0.5;
-        LeftMotor.setPower(speed);//Starts at -1.0 to 1.0
-        RightMotor.setPower(speed);
-
-        telemetry.addData("Speed: ", speed);
-        telemetry.addData("Name:","Shubaan");
-        telemetry.update();
-
-        LeftMotor.setPower(0.0);
-        RightMotor.setPower(0.0);
 
 
 
