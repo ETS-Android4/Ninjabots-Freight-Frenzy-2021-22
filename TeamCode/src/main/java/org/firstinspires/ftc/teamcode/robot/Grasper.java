@@ -23,4 +23,5 @@ public class Grasper {
         grasperPos = GRASPER_OPEN;
         grasperServo.setPosition(grasperPos);
     }
+
 }

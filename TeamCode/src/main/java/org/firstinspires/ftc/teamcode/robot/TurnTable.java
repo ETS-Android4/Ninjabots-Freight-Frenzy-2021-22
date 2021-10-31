@@ -17,4 +17,8 @@ public class TurnTable {
     public void setPower(){
         motor.setPower(this.TurnTablePower);
     }
+    public void stopTurnTable(){
+        this.TurnTablePower = 0.0;
+        this.setPower();
+    }
 }

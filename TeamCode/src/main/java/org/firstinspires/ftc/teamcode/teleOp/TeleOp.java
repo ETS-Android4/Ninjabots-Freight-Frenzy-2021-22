@@ -39,6 +39,12 @@ public class TeleOp extends OpMode {
         else if (gamepad1.dpad_right){
             Ninjabot.grasper.openGrasper();
         }
+        if (gamepad1.dpad_left){
+            Ninjabot.runTurnTable(0.195);
+        }
+        else{
+            Ninjabot.stopTurnTable();
+        }
 
 
         telemetry.addData("Br: ",Ninjabot.drivetrain.br.getCurrentPosition());

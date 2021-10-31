@@ -18,5 +18,8 @@ public class Ninjabot {
     public void runTurnTable(double inputPower){
         this.turnTable.setPower(inputPower);
     }
+    public void stopTurnTable(){
+        this.turnTable.stopTurnTable();
+    }
 
 }
