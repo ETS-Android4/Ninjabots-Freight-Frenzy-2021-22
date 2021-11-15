@@ -9,17 +9,17 @@ public class Ninjabot {
     public Grasper grasper;
     public Ninjabot(DcMotor.RunMode runMode, HardwareMap hardwareMap){
         this.drivetrain = new drivetrain(runMode, hardwareMap);
-        this.turnTable = new TurnTable(hardwareMap);
-        this.grasper = new Grasper(hardwareMap);
+        //this.turnTable = new TurnTable(hardwareMap);
+        //this.grasper = new Grasper(hardwareMap);
     }
-    public void init(){
-        grasper.grasperServo.setPosition(0.0);
-    }
-    public void runTurnTable(double inputPower){
-        this.turnTable.setPower(inputPower);
-    }
-    public void stopTurnTable(){
-        this.turnTable.stopTurnTable();
-    }
+    //public void init(){
+    //    grasper.grasperServo.setPosition(0.0);
+    //}
+    //public void runTurnTable(double inputPower){
+    //    this.turnTable.setPower(inputPower);
+    //}
+    //public void stopTurnTable(){
+    //    this.turnTable.stopTurnTable();
+    //}
 
 }

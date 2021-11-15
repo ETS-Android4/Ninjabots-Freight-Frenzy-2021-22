@@ -23,13 +23,21 @@ public class drivetrain{
         this.bl = hardwareMap.get(DcMotor.class, "bl");
         this.br = hardwareMap.get(DcMotor.class, "br");
 
+        this.bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        this.fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
         this.bl.setMode(mode);
         this.br.setMode(mode);
         this.fl.setMode(mode);
         this.fr.setMode(mode);
 
-        //this.br.setDirection(DcMotorSimple.Direction.REVERSE);
+        //this.bl.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.br.setDirection(DcMotorSimple.Direction.REVERSE);
         this.fr.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.fl.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //Init Power for Motors
         this.frpow = 0.0;
@@ -63,7 +71,7 @@ public class drivetrain{
 
     private void SetPower(){
         this.fl.setPower(this.flpow);
-        this.br.setPower(this.brpow * 0.95238095238);
+        this.br.setPower(this.brpow );//* (1.0 / 3));//* 0.95238095238);
         this.bl.setPower(this.blpow);
         this.fr.setPower(this.frpow);
     }

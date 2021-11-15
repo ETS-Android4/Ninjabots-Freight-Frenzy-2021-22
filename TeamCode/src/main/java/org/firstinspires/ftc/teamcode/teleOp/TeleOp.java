@@ -18,20 +18,22 @@ public class TeleOp extends OpMode {
 
     @Override
     public void loop() {
-        if (gamepad1.left_stick_y == 0 && gamepad1.right_stick_y == 0 && gamepad1.right_trigger == 0 && gamepad1.left_trigger == 0){
+        Ninjabot.drivetrain.SetPower(0.1, 0.1);
+        if (gamepad1.left_stick_y == 0 && gamepad1.right_stick_y == 0 && gamepad1.right_trigger < 0.1 && gamepad1.left_trigger < 0.1 && false){
             Ninjabot.drivetrain.StopMotors();
         }
         else if (gamepad1.left_stick_y !=0 || gamepad1.right_stick_y != 0){
-            Ninjabot.drivetrain.SetPower(gamepad1.left_stick_y, gamepad1.right_stick_y);
+            Ninjabot.drivetrain.SetPower(-gamepad1.left_stick_y, -gamepad1.right_stick_y);
         }
 
-        else if (gamepad1.right_trigger > 0.2){
-            Ninjabot.drivetrain.StrafeRight();
+        /*if(gamepad1.left_trigger != 0){
+            //turn
+            Ninjabot.drivetrain.SetPower(-0.2, 0.8);
         }
-        else if (gamepad1.left_trigger > 0.2){
-            Ninjabot.drivetrain.StrafeLeft();
-        }
+        else if (gamepad1.right_trigger != 0){
+            Ninjabot.drivetrain.SetPower(0.8, -0.3);
 
+        }*/
 
         if (gamepad1.dpad_left){
             Ninjabot.grasper.closeGrasper();
@@ -39,18 +41,14 @@ public class TeleOp extends OpMode {
         else if (gamepad1.dpad_right){
             Ninjabot.grasper.openGrasper();
         }
-        if (gamepad1.dpad_left){
+        /*if (gamepad1.dpad_left){
             Ninjabot.runTurnTable(0.195);
         }
         else{
             Ninjabot.stopTurnTable();
         }
+        */
 
-
-        telemetry.addData("Br: ",Ninjabot.drivetrain.br.getCurrentPosition());
-        telemetry.addData("Br: ",Ninjabot.drivetrain.bl.getCurrentPosition());
-        telemetry.addData("Fr: ",Ninjabot.drivetrain.fr.getCurrentPosition());
-        telemetry.addData("FL: ",Ninjabot.drivetrain.fl.getCurrentPosition());
 
     }
 }
