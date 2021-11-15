@@ -18,7 +18,7 @@ public class TeleOp extends OpMode {
 
     @Override
     public void loop() {
-        Ninjabot.drivetrain.SetPower(0.1, 0.1);
+        Ninjabot.drivetrain.SetPower(0.8, 0.8);
         if (gamepad1.left_stick_y == 0 && gamepad1.right_stick_y == 0 && gamepad1.right_trigger < 0.1 && gamepad1.left_trigger < 0.1 && false){
             Ninjabot.drivetrain.StopMotors();
         }

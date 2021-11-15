@@ -13,7 +13,8 @@ public class Camera {
     public OpenCvWebcam webcam;
     private int cameraMonitorViewId;
     private CameraPipeline pipeline;
-    private FtcDashboard dashboard;
+    private int average;
+    //private FtcDashboard dashboard;
     // Initialize bounding boxes
     // Initialize Thresholds
     public Camera(HardwareMap hardwareMap){
@@ -21,16 +22,12 @@ public class Camera {
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
         pipeline = new CameraPipeline();
         webcam.setPipeline(pipeline);
-        dashboard = FtcDashboard.getInstance();
-
-    }
-
-    public CameraPipeline.DuckPosition detect(){
-
+        //dashboard = FtcDashboard.getInstance();
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
                 webcam.startStreaming(320, 240);
+
             }
 
             @Override
@@ -38,11 +35,19 @@ public class Camera {
 
             }
 
-        });
-        final int average = pipeline.getAnalysis();
-        dashboard.startCameraStream(webcam, 30);
-        return pipeline.position;
 
+
+        });
+    }
+
+    public void detect(){
+
+        average = pipeline.getAnalysis();
+        //dashboard.startCameraStream(webcam, 30);
+
+    }
+    public int getAverage(){
+        return average;
     }
 
 }

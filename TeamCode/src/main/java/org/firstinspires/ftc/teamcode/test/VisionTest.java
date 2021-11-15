@@ -22,14 +22,15 @@ public class VisionTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         webcam = new Camera(hardwareMap);
-        FtcDashboard dashboard = FtcDashboard.getInstance();
+        //FtcDashboard dashboard = FtcDashboard.getInstance();
         //dashboard.setTelemetryTransmissionInterval(25);
-        packet = new TelemetryPacket();
+        //packet = new TelemetryPacket();
 
         waitForStart();
         while (opModeIsActive()){
             webcam.detect();
-
+            telemetry.addData("Analysis:", webcam.getAverage());
+            telemetry.update();
         }
     }
 }
