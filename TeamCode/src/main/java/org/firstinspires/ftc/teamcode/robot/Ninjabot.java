@@ -5,21 +5,25 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Ninjabot {
     public drivetrain drivetrain;
+    public ultraSonic ultraSonic;
     public TurnTable turnTable;
-    public Grasper grasper;
+
     public Ninjabot(DcMotor.RunMode runMode, HardwareMap hardwareMap){
         this.drivetrain = new drivetrain(runMode, hardwareMap);
-        //this.turnTable = new TurnTable(hardwareMap);
-        //this.grasper = new Grasper(hardwareMap);
+        this.turnTable = new TurnTable(hardwareMap);
+        //this.ultraSonic = new ultraSonic(hardwareMap);
     }
-    //public void init(){
-    //    grasper.grasperServo.setPosition(0.0);
-    //}
-    //public void runTurnTable(double inputPower){
-    //    this.turnTable.setPower(inputPower);
-    //}
-    //public void stopTurnTable(){
-    //    this.turnTable.stopTurnTable();
-    //}
+    /*public void ultraRightStrafe(){
+        if(! (ultraSonic.state == org.firstinspires.ftc.teamcode.robot.ultraSonic.State.IDLE)){
+            drivetrain.StrafeRight();
+        }
+        if(ultraSonic.state == org.firstinspires.ftc.teamcode.robot.ultraSonic.State.ULTRA_RIGHT_REACHED){
+            drivetrain.StopMotors();
+        }
+    }*/
+    public void ultraLeftStrafe(){
+
+    }
+
 
 }

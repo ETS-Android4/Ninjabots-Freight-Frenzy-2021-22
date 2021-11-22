@@ -5,6 +5,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.UltrasonicSensor;
+
+import fi.iki.elonen.NanoHTTPD;
 
 
 public class drivetrain{
@@ -14,9 +17,11 @@ public class drivetrain{
     public DcMotor bl;
     public DcMotor fr;
     public DcMotor fl;
-    private double frpow, brpow, flpow, blpow;
+    public double frpow, brpow, flpow, blpow;
     private final double frontpow;
     private final double backpow;
+    public final double roundPow = 0.4;
+    private final double leftOffset = 1.0;
     public drivetrain(DcMotor.RunMode mode, HardwareMap hardwareMap){
         this.fl = hardwareMap.get(DcMotor.class, "fl");
         this.fr = hardwareMap.get(DcMotor.class, "fr");
@@ -54,14 +59,6 @@ public class drivetrain{
         this.servpos = 0.5;
     }
     public void StrafeLeft(){
-        this.blpow = this.backpow;
-        this.flpow = this.frontpow;
-        this.frpow = this.backpow;
-        this.brpow = this.frontpow;
-        SetPower();
-    }
-
-    public void StrafeRight(){
         this.blpow = this.frontpow;
         this.flpow = this.backpow;
         this.frpow = this.frontpow;
@@ -69,11 +66,19 @@ public class drivetrain{
         SetPower();
     }
 
+    public void StrafeRight(){
+        this.blpow = this.backpow;
+        this.flpow = this.frontpow;
+        this.frpow = this.backpow;
+        this.brpow = this.frontpow;
+        SetPower();
+    }
+
     private void SetPower(){
-        this.fl.setPower(this.flpow);
-        this.br.setPower(this.brpow);
-        this.bl.setPower(this.blpow);
-        this.fr.setPower(this.frpow);
+        this.fl.setPower(Math.round(this.flpow/roundPow)*roundPow * leftOffset);
+        this.br.setPower(Math.round(this.brpow/roundPow)*roundPow);
+        this.bl.setPower(Math.round(this.blpow/roundPow)*roundPow * leftOffset);
+        this.fr.setPower(Math.round(this.frpow/roundPow)*roundPow);
     }
     public void SetPower(double g1power, double g2power) {
         this.blpow = g1power;
@@ -92,5 +97,6 @@ public class drivetrain{
 
 
     }
+
 
 }
