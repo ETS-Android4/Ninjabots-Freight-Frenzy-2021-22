@@ -41,12 +41,34 @@ public class TeleOp extends OpMode {
         else if (gamepad1.b){
             Ninjabot.turnTable.stopTurnTable();
         }
+        if(gamepad1.dpad_up){
+            Ninjabot.lifter.liftToTop();
+        }
+        else if (gamepad1.dpad_down){
+            Ninjabot.lifter.dropDown();
+        }
+
+        if(gamepad1.left_bumper){
+            Ninjabot.grasper.openGrasper();
+            telemetry.addData("Grasper opening.", "true");
+        }
+        else if (gamepad1.right_bumper){
+            Ninjabot.grasper.closeGrasper();
+            telemetry.addData("Grasper closing.", "true");
+        }
+        Ninjabot.lifter.update();
         telemetry.addData("FL: ", Ninjabot.drivetrain.fl.getCurrentPosition());
         telemetry.addData("FR: ", Ninjabot.drivetrain.fr.getCurrentPosition());
         telemetry.addData("BL: ", Ninjabot.drivetrain.bl.getCurrentPosition());
         telemetry.addData("BR: ", Ninjabot.drivetrain.br.getCurrentPosition());
+        telemetry.addData("State of Lifter: ", Ninjabot.lifter.state);
+        telemetry.addData("Lifter Power: ", Ninjabot.lifter.getCheckpointPower());
+        telemetry.addData("Lifter Level: ", Ninjabot.lifter.getCheckpointIndex());
+        telemetry.addData("Lifter Encoder Count: ", Ninjabot.lifter.getEncoderCount());
+        telemetry.addData("Touch Condition: ", Ninjabot.lifter.touch.isPressed());
 
         telemetry.update();
+
     }
 
 }

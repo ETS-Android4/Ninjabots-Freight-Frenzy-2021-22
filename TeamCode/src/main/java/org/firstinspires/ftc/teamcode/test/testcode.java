@@ -65,7 +65,6 @@ public class testcode extends LinearOpMode {
             this.turnTable.setPower(motorPower);
     }
 
-    // Declare OpMode members.
 
 
 

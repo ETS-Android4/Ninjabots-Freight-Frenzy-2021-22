@@ -17,11 +17,11 @@ public class Grasper {
     }
     public void closeGrasper(){
         grasperPos = GRASPER_CLOSE;
-        grasperServo.setPosition(grasperPos);
+        grasperServo.setPosition(GRASPER_CLOSE);
     }
     public void openGrasper(){
         grasperPos = GRASPER_OPEN;
-        grasperServo.setPosition(grasperPos);
+        grasperServo.setPosition(GRASPER_OPEN);
     }
 
 }
