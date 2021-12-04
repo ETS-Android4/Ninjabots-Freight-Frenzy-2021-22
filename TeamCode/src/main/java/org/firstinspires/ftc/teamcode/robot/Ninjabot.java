@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.robot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.robot.vision.Camera;
+
 /*
 * Control Hub --
 * 0 - TurnTable
@@ -24,6 +26,7 @@ public class Ninjabot {
     public lifter lifter;
     public Cradle cradle;
     public intake intake;
+    public Camera webcam;
 
     public Ninjabot(DcMotor.RunMode runMode, HardwareMap hardwareMap){
         this.drivetrain = new drivetrain(runMode, hardwareMap);
@@ -33,6 +36,7 @@ public class Ninjabot {
         this.intake = new intake(hardwareMap);
         this.cradle.closeGate();
         this.intake.setBaseIntensity();
+        this.webcam = new Camera(hardwareMap);
     }
 
 

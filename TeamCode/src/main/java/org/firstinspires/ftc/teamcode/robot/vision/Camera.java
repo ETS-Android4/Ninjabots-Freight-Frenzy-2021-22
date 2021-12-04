@@ -50,6 +50,5 @@ public class Camera {
         return average1;
     }
     public int getAverage2(){return average2;}
-
     public int getAverage3(){return average3;}
 }

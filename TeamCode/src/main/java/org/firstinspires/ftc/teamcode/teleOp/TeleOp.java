@@ -54,6 +54,7 @@ public class TeleOp extends OpMode {
             Ninjabot.cradle.openGate();
             telemetry.addData("Grasper closing.", "true");
         }
+
         Ninjabot.lifter.update();
         telemetry.addData("FL: ", Ninjabot.drivetrain.fl.getCurrentPosition());
         telemetry.addData("FR: ", Ninjabot.drivetrain.fr.getCurrentPosition());
