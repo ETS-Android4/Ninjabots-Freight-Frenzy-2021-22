@@ -22,14 +22,17 @@ public class Ninjabot {
     public drivetrain drivetrain;
     public TurnTable turnTable;
     public lifter lifter;
-    public Grasper grasper;
+    public Cradle cradle;
+    public intake intake;
 
     public Ninjabot(DcMotor.RunMode runMode, HardwareMap hardwareMap){
         this.drivetrain = new drivetrain(runMode, hardwareMap);
         this.turnTable = new TurnTable(hardwareMap);
-        this.grasper = new Grasper(hardwareMap);
+        this.cradle = new Cradle(hardwareMap);
         this.lifter = new lifter(hardwareMap);
-        this.grasper.closeGrasper();
+        this.intake = new intake(hardwareMap);
+        this.cradle.closeGate();
+        this.intake.setBaseIntensity();
     }
 
 

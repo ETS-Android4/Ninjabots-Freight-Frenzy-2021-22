@@ -46,7 +46,7 @@ import org.firstinspires.ftc.teamcode.robot.TurnTable;
 
 @TeleOp(name = "Turn Table Test", group = "Test")
 
-public class testcode extends LinearOpMode {
+public class TurnTableTest extends LinearOpMode {
     TurnTable turnTable;
     private double motorPower = 0.1;
     @Override

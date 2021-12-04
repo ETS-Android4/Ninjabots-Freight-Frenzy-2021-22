@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.robot.vision;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -13,8 +12,9 @@ public class Camera {
     public OpenCvWebcam webcam;
     private int cameraMonitorViewId;
     private CameraPipeline pipeline;
-    private int average;
-    //private FtcDashboard dashboard;
+    private int average1;
+    private int average2;
+    private int average3;
     // Initialize bounding boxes
     // Initialize Thresholds
     public Camera(HardwareMap hardwareMap){
@@ -22,7 +22,6 @@ public class Camera {
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "webcam"), cameraMonitorViewId);
         pipeline = new CameraPipeline();
         webcam.setPipeline(pipeline);
-        //dashboard = FtcDashboard.getInstance();
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
@@ -42,12 +41,15 @@ public class Camera {
 
     public void detect(){
 
-        average = pipeline.getAnalysis();
-        //dashboard.startCameraStream(webcam, 30);
+        average1 = pipeline.getRegion1();
+        average2 = pipeline.getRegion2();
+        average3 = pipeline.getRegion3();
 
     }
-    public int getAverage(){
-        return average;
+    public int getAverage1(){
+        return average1;
     }
+    public int getAverage2(){return average2;}
 
+    public int getAverage3(){return average3;}
 }

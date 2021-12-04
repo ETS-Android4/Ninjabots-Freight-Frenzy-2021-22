@@ -7,6 +7,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 public class lifter {
+
+    // Old Code
+    /*
     private DcMotor motor;
     private enum liftState{
         IDLE,
@@ -92,4 +95,64 @@ public class lifter {
     public int getEncoderCount(){
         return this.motor.getCurrentPosition();
     }
+    */
+    private DcMotor motor;
+    private TouchSensor touch;
+    private int targetMotorPosition = 300;
+    private int basePosition;
+    private int topPosition;
+    private final double STALL_POWER = 0.2;
+    private final double LIFT_SPEED =  0.4;
+    private final double DROP_SPEED =  -0.3;
+
+    public enum State{
+        IDLE,
+        LIFTING,
+        DROPPING,
+        LIFTED
+    }
+    public State lifterState;
+    public lifter(HardwareMap hw){
+        motor = hw.get(DcMotor.class, "lifter");
+        //touch = hw.get(TouchSensor.class, "touch");
+        this.lifterState = State.IDLE;
+        this.motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.topPosition = 0;
+        this.basePosition = motor.getCurrentPosition();
+    }
+    public void liftArm(){
+        this.lifterState = State.LIFTING;
+    }
+    public void dropArm(){
+        this.lifterState = State.DROPPING;
+    }
+    public void stall(){
+        this.motor.setTargetPosition(topPosition);
+        this.motor.setPower(STALL_POWER);
+    }
+    public void update(){
+        switch (lifterState){
+            case LIFTING:
+                this.motor.setTargetPosition(targetMotorPosition);
+                this.motor.setPower(LIFT_SPEED);
+            case IDLE:
+                this.motor.setPower(0.0);
+            case DROPPING:
+                this.motor.setTargetPosition(basePosition);
+                this.motor.setPower(DROP_SPEED);
+            case LIFTED:
+                this.stall();
+        }
+        if(lifterState == State.LIFTING && Math.abs(targetMotorPosition - this.motor.getCurrentPosition()) <= 10){
+            this.lifterState = State.LIFTED;
+        }
+        if(lifterState == State.DROPPING && Math.abs(basePosition - this.motor.getCurrentPosition()) <= 10){
+            this.lifterState = State.IDLE;
+        }
+
+    }
+
+    public int getEncoderCount(){return motor.getCurrentPosition();}
+    public double getMotorPower(){return motor.getPower();}
+
 }
