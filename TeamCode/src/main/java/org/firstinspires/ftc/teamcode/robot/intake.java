@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.robot;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class intake {
@@ -13,6 +14,7 @@ public class intake {
         this.intakeMotor = hw.get(DcMotor.class, "intake");
         this.color = hw.get(ColorSensor.class, "color");
         this.intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         baseIntensity = 0;
     }
     public void runIntake(){
@@ -20,6 +22,9 @@ public class intake {
     }
     public void stopIntake(){
         this.intakeMotor.setPower(0.0);
+    }
+    public void reverseIntake(){
+        this.intakeMotor.setPower(-0.6);
     }
     public void setBaseIntensity(){this.baseIntensity = color.alpha();}
     public boolean checkColor(){

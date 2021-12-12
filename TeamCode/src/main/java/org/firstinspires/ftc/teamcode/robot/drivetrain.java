@@ -39,10 +39,10 @@ public class drivetrain{
         this.fl.setMode(mode);
         this.fr.setMode(mode);
 
-        //this.bl.setDirection(DcMotorSimple.Direction.REVERSE);
-        //this.br.setDirection(DcMotorSimple.Direction.REVERSE);
-        //this.fr.setDirection(DcMotorSimple.Direction.REVERSE);
-        //this.fl.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.bl.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.br.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.fr.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.fl.setDirection(DcMotorSimple.Direction.REVERSE);
 
         //Init Power for Motors
         this.frpow = 0.0;

@@ -25,25 +25,26 @@ public class TeleOp extends OpMode {
         }
 
         if(gamepad1.left_trigger != 0){
-            Ninjabot.drivetrain.StrafeLeft();
+            //Ninjabot.drivetrain.StrafeLeft();
+            Ninjabot.intake.runIntake();
         }
         else if (gamepad1.right_trigger != 0){
-            Ninjabot.drivetrain.StrafeRight();
+            Ninjabot.intake.stopIntake();
 
         }
 
         //Turn Table
-        if(gamepad1.x){
+        if(gamepad1.dpad_left){
             Ninjabot.turnTable.setPower();
         }
-        else if (gamepad1.b){
+        else if (gamepad1.dpad_right){
             Ninjabot.turnTable.stopTurnTable();
         }
         if(gamepad1.dpad_up){
-            Ninjabot.lifter.liftArm();
+            Ninjabot.lifter.liftToTop();
         }
         else if (gamepad1.dpad_down){
-            Ninjabot.lifter.dropArm();
+            Ninjabot.lifter.dropDown();
         }
 
         if(gamepad1.left_bumper){
@@ -60,10 +61,10 @@ public class TeleOp extends OpMode {
         telemetry.addData("FR: ", Ninjabot.drivetrain.fr.getCurrentPosition());
         telemetry.addData("BL: ", Ninjabot.drivetrain.bl.getCurrentPosition());
         telemetry.addData("BR: ", Ninjabot.drivetrain.br.getCurrentPosition());
-        telemetry.addData("State of Lifter: ", Ninjabot.lifter.lifterState);
+        telemetry.addData("State of Lifter: ", Ninjabot.lifter.state);
         telemetry.addData("Lifter Encoder Count: ", Ninjabot.lifter.getEncoderCount());
-        telemetry.addData("Lifter Power: ", Ninjabot.lifter.getMotorPower());
-        //telemetry.addData("Touch Condition: ", Ninjabot.lifter.touch.isPressed());
+        telemetry.addData("Lifter Power: ", Ninjabot.lifter.getCheckpointPower());
+        telemetry.addData("Touch Condition: ", Ninjabot.lifter.touch.isPressed());
 
         telemetry.update();
 

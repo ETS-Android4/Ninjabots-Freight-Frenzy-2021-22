@@ -34,8 +34,9 @@ public class Ninjabot {
         this.cradle = new Cradle(hardwareMap);
         this.lifter = new lifter(hardwareMap);
         this.intake = new intake(hardwareMap);
-        this.cradle.closeGate();
+        this.cradle.closeSwivel();
         this.intake.setBaseIntensity();
+        this.cradle.closeGate();
         this.webcam = new Camera(hardwareMap);
     }
 

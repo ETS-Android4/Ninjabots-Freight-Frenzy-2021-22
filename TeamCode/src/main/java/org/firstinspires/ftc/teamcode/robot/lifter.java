@@ -3,13 +3,13 @@ package org.firstinspires.ftc.teamcode.robot;
 import android.hardware.camera2.params.TonemapCurve;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 public class lifter {
 
-    // Old Code
-    /*
+    // Old Cod
     private DcMotor motor;
     private enum liftState{
         IDLE,
@@ -17,7 +17,7 @@ public class lifter {
         LIFTED,
         DROPPING
     }
-    private int[] checkpoint = new int[]{160, 200, 220, 255};
+    private int[] checkpoint = new int[]{160, 200, 220, 500};
     private int[] checkpointDown = new int[]{-160, -190, -215, -235};
     private double[] checkpointPower = new double[]{0.6, 0.2, 0.09, 0.03};
     private double[] checkpointDropPower = new double[]{-0.6, -0.16, -0.1, -0.03};
@@ -27,6 +27,7 @@ public class lifter {
     private int liftedEncoder;
     public lifter(HardwareMap hw){
         this.motor = hw.get(DcMotor.class, "lifter");
+        this.motor.setDirection(DcMotorSimple.Direction.REVERSE);
         this.motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         this.state = liftState.IDLE;
@@ -44,7 +45,7 @@ public class lifter {
         this.motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
     public void stall(){
-        this.motor.setPower(0.01);
+        this.motor.setPower(0.0);
     }
     public void update(){
         if(touch.isPressed() && state != liftState.DROPPING){
@@ -77,7 +78,7 @@ public class lifter {
 
         if (state == liftState.LIFTED){
             stall();
-            //state = liftState.LIFTING;
+            state = liftState.LIFTING;
         }
 
 
@@ -95,8 +96,9 @@ public class lifter {
     public int getEncoderCount(){
         return this.motor.getCurrentPosition();
     }
-    */
-    private DcMotor motor;
+}
+
+    /*private DcMotor motor;
     private TouchSensor touch;
     private int targetMotorPosition = 300;
     private int basePosition;
@@ -155,4 +157,4 @@ public class lifter {
     public int getEncoderCount(){return motor.getCurrentPosition();}
     public double getMotorPower(){return motor.getPower();}
 
-}
+}*/
