@@ -15,12 +15,7 @@ public class IntakeTest extends LinearOpMode {
         this.robot = new intake(hardwareMap);
         waitForStart();
         while (opModeIsActive()){
-            if(gamepad1.a){
-                robot.runIntake();
-            }
-            else if (gamepad1.b){
-                robot.stopIntake();
-            }
+            robot.runIntake();
         }
     }
 }
