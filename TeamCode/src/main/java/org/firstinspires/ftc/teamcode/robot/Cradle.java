@@ -10,9 +10,9 @@ public class Cradle {
     private Servo grasperGate;
 
     // Grasper Constants
-    private final double GRASPER_OPEN = 0.7;
-    private final double GRASPER_CLOSE = 0.0;
-    private final double SWIVEL_BASE = 0.0;
+    public double GRASPER_OPEN = 0.15;
+    public double GRASPER_CLOSE = 0.0;
+    private  double SWIVEL_BASE = 0.0;
     private final double SWIVEL_TARGET = 0.7;
 
     public Cradle(HardwareMap hw){
@@ -31,4 +31,10 @@ public class Cradle {
     public void closeSwivel(){
         this.swivel.setPosition(SWIVEL_BASE);
     }
+    public double getGatePos(){return grasperGate.getPosition();}
+    public void incOpenPos(double inc){GRASPER_OPEN += inc;}
+    public void decOpenPos(double inc){GRASPER_OPEN -= inc;}
+    public void incClosePos(double inc){GRASPER_CLOSE += inc;}
+    public void decClosePos(double inc){GRASPER_CLOSE -= inc;}
+
 }

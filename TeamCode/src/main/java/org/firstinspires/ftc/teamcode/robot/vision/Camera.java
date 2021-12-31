@@ -43,12 +43,12 @@ public class Camera {
 
         average1 = pipeline.getRegion1();
         average2 = pipeline.getRegion2();
-        average3 = pipeline.getRegion3();
+        //average3 = pipeline.getRegion3();
 
     }
     public int getAverage1(){
         return average1;
     }
     public int getAverage2(){return average2;}
-    public int getAverage3(){return average3;}
+    //public int getAverage3(){return average3;}
 }

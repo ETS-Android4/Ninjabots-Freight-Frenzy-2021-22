@@ -31,7 +31,7 @@ public class VisionTest extends LinearOpMode {
             webcam.detect();
             telemetry.addData("Analysis 1:", webcam.getAverage1());
             telemetry.addData("Analysis 2:", webcam.getAverage2());
-            telemetry.addData("Analysis 3:", webcam.getAverage3());
+            //telemetry.addData("Analysis 3:", webcam.getAverage3());
 
             telemetry.update();
         }

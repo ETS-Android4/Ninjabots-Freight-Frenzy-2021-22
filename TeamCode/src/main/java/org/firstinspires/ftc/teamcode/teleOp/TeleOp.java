@@ -63,7 +63,6 @@ public class TeleOp extends OpMode {
         telemetry.addData("BR: ", Ninjabot.drivetrain.br.getCurrentPosition());
         telemetry.addData("State of Lifter: ", Ninjabot.lifter.state);
         telemetry.addData("Lifter Encoder Count: ", Ninjabot.lifter.getEncoderCount());
-        telemetry.addData("Lifter Power: ", Ninjabot.lifter.getCheckpointPower());
         telemetry.addData("Touch Condition: ", Ninjabot.lifter.touch.isPressed());
 
         telemetry.update();

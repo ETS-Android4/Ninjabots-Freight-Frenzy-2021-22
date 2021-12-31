@@ -5,20 +5,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.robot.vision.Camera;
 
-/*
-* Control Hub --
-* 0 - TurnTable
-* 1 -
-* 2 -
-* 3 -
-*
-*
-*
-*
-* Expansion Hub --
-*
-*
-* */
 
 public class Ninjabot {
     public drivetrain drivetrain;
@@ -35,11 +21,9 @@ public class Ninjabot {
         this.lifter = new lifter(hardwareMap);
         this.intake = new intake(hardwareMap);
         this.cradle.closeSwivel();
-        this.intake.setBaseIntensity();
+        //this.intake.setBaseIntensity();
         this.cradle.closeGate();
         this.webcam = new Camera(hardwareMap);
     }
-
-
 
 }
