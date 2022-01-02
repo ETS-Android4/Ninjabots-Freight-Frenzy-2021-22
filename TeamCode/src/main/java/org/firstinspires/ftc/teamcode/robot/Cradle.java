@@ -10,7 +10,7 @@ public class Cradle {
     private Servo grasperGate;
 
     // Grasper Constants
-    public double GRASPER_OPEN = 0.15;
+    public double GRASPER_OPEN = 0.18;
     public double GRASPER_CLOSE = 0.0;
     private  double SWIVEL_BASE = 0.0;
     private final double SWIVEL_TARGET = 0.7;

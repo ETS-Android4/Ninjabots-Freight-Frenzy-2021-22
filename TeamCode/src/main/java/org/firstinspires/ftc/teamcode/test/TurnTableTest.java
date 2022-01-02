@@ -62,7 +62,7 @@ public class TurnTableTest extends LinearOpMode {
             }
             telemetry.addData("Motor Power: ", motorPower);
             telemetry.update();
-            this.turnTable.setPower(motorPower);
+            this.turnTable.setPower();
     }
 
 

@@ -10,7 +10,8 @@ public class TurnTable {
     // Running with a rev Motor
     private DcMotor motor;
     public TurnTable(HardwareMap hardwareMap){
-        this.motor = hardwareMap.get(DcMotor.class, "intake");//shoule be turntable, just for testing
+        this.motor = hardwareMap.get(DcMotor.class, "TurnTable");//shoule be turntable, just for testing
+        this.motor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
     public void setPower(double power){
         this.TurnTablePower = power;

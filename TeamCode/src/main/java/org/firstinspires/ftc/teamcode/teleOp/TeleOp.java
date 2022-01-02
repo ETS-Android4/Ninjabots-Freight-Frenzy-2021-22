@@ -4,12 +4,13 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.robot.Ninjabot;
+import org.firstinspires.ftc.teamcode.robot.lifter;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name = "TeleOp")
 
 public class TeleOp extends OpMode {
     Ninjabot Ninjabot;
-    private double deadZoneVal = 0.4;
+    private double deadZoneVal = 0.3;
     @Override
     public void init() {
         Ninjabot = new Ninjabot(DcMotor.RunMode.RUN_USING_ENCODER, hardwareMap);
@@ -25,12 +26,12 @@ public class TeleOp extends OpMode {
         }
 
         if(gamepad1.left_trigger != 0){
-            //Ninjabot.drivetrain.StrafeLeft();
-            Ninjabot.intake.runIntake();
+            Ninjabot.drivetrain.StrafeLeft();
+            //Ninjabot.intake.runIntake();
         }
         else if (gamepad1.right_trigger != 0){
-            Ninjabot.intake.stopIntake();
-
+            //Ninjabot.intake.stopIntake();
+            Ninjabot.drivetrain.StrafeRight();
         }
 
         //Turn Table
@@ -40,23 +41,35 @@ public class TeleOp extends OpMode {
         else if (gamepad1.dpad_right){
             Ninjabot.turnTable.stopTurnTable();
         }
-        if(gamepad1.dpad_up){
+        if(gamepad2.dpad_left){
+            Ninjabot.intake.runIntake();
+        }
+        else if (gamepad2.dpad_right){
+            Ninjabot.intake.stopIntake();
+        }
+
+        if(gamepad2.dpad_up){
             Ninjabot.lifter.liftToTop();
         }
-        else if (gamepad1.dpad_down){
+        else if (gamepad2.dpad_down){
             Ninjabot.lifter.dropDown();
         }
 
-        if(gamepad1.left_bumper){
+        if(gamepad2.right_trigger > deadZoneVal){
             Ninjabot.cradle.closeGate();
-            telemetry.addData("Grasper opening.", "true");
+            Ninjabot.intake.stopIntake();
         }
-        else if (gamepad1.right_bumper){
+        else if (gamepad2.left_trigger > deadZoneVal){
             Ninjabot.cradle.openGate();
-            telemetry.addData("Grasper closing.", "true");
         }
 
-        Ninjabot.lifter.update();
+        //Auto Lift Testing
+        //if(Ninjabot.cradle.getGatePos() == Ninjabot.cradle.GRASPER_CLOSE && Ninjabot.lifter.getState() == lifter.liftState.IDLE){
+        //    Ninjabot.lifter.liftToTop();
+        //}
+
+
+        Ninjabot.update();
         telemetry.addData("FL: ", Ninjabot.drivetrain.fl.getCurrentPosition());
         telemetry.addData("FR: ", Ninjabot.drivetrain.fr.getCurrentPosition());
         telemetry.addData("BL: ", Ninjabot.drivetrain.bl.getCurrentPosition());

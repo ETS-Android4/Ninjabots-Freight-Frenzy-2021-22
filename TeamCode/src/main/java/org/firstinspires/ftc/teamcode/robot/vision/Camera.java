@@ -15,6 +15,7 @@ public class Camera {
     private int average1;
     private int average2;
     private int average3;
+    private CameraPipeline.DuckPosition pos;
     // Initialize bounding boxes
     // Initialize Thresholds
     public Camera(HardwareMap hardwareMap){
@@ -40,15 +41,17 @@ public class Camera {
     }
 
     public void detect(){
-
         average1 = pipeline.getRegion1();
         average2 = pipeline.getRegion2();
         //average3 = pipeline.getRegion3();
+        pos = pipeline.getPosition();
+
 
     }
     public int getAverage1(){
         return average1;
     }
     public int getAverage2(){return average2;}
+    public CameraPipeline.DuckPosition getPosition(){return pos;}
     //public int getAverage3(){return average3;}
 }

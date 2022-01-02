@@ -182,6 +182,7 @@ public class CameraPipeline extends OpenCvPipeline {
 
     public int getRegion1(){return avg1;}
     public int getRegion2(){return avg2;}
+    public DuckPosition getPosition(){return position;}
     //public int getRegion3(){return avg3;}
 
 
