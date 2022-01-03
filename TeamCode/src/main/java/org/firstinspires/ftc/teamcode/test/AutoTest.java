@@ -37,23 +37,10 @@ public class AutoTest extends LinearOpMode {
         }
 
         waitForStart();
-        /*robot.MoveTank(1, 0.5);
-        Thread.sleep(1000);
+        robot.MoveTank(1, 0.5);
         robot.MoveTank(-1, 0.5);
-        Thread.sleep(1000);
         robot.StrafeRight(1, 0.5);
-        Thread.sleep(1000);
         robot.StrafeLeft(1, 0.5);
-        Thread.sleep(1000);
-*/
         robot.turnLeft(90, 0.5);
-        telemetry.addData("Targ:", robot.drivetrain.getTargetPos());
-        telemetry.addData("Targ1:", (int) (90/360 * 537.6));
-        telemetry.update();
-        Thread.sleep(3000);
-        //robot.turnRight(180, 0.5);
-        //telemetry.addData("Targ:", robot.drivetrain.getTargetPos());
-        //telemetry.addData("Targ1:", (double) (180/360 * 537.6));
-        //telemetry.update();
     }
 }

@@ -12,7 +12,6 @@ public class RotationCalc extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         robot = new Ninjabot(DcMotor.RunMode.RUN_USING_ENCODER, hardwareMap);
         waitForStart();
-        robot.turnLeftRots(3, 0.5);
 
     }
 }

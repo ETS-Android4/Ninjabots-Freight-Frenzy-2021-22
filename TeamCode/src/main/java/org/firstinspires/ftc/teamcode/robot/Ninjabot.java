@@ -15,6 +15,7 @@ public class Ninjabot {
     public Camera webcam;
     private double ticksPerRev = 537.6;
     private double degPerRot = 75;
+    private final double RotPerInch = 0.0795774715459477;
     private boolean alrMoving = false;
 
     public Ninjabot(DcMotor.RunMode runMode, HardwareMap hardwareMap){
@@ -33,38 +34,44 @@ public class Ninjabot {
     public void update(){
         this.lifter.update();
     }
-    public void MoveTank(int rotations, double speed){
+    public void MoveTank(int inches, double speed){
+        waitUntilMove();
         this.drivetrain.resetMotors();
+        double rotations = (double) inches * RotPerInch;
         this.drivetrain.SetTargPos((int) (rotations * ticksPerRev));
         this.drivetrain.runToPos(speed);
     }
-    public void StrafeLeft(int rotations, double speed){
+    public void StrafeLeft(int inches, double speed){
+        waitUntilMove();
         this.drivetrain.resetMotors();
+        double rotations = (double) inches * RotPerInch;
         this.drivetrain.SetTargPos((int) (rotations * ticksPerRev));
         this.drivetrain.strafeLeftPos(speed);
     }
-    public void StrafeRight(int rotations, double speed){
+    public void StrafeRight(int inches, double speed){
+        waitUntilMove();
         this.drivetrain.resetMotors();
+        double rotations = (double) inches * RotPerInch;
         this.drivetrain.SetTargPos((int) (rotations * ticksPerRev));
         this.drivetrain.strafeRightPos(speed);
     }
     public void turnLeft(int degrees, double speed){
+        waitUntilMove();
         this.drivetrain.resetMotors();
         this.drivetrain.SetTargPos((int) (((double) degrees/degPerRot) * ticksPerRev));
         this.drivetrain.turnLeftPos(speed);
     }
     public void turnRight(int degrees, double speed){
+        waitUntilMove();
         this.drivetrain.resetMotors();
         this.drivetrain.SetTargPos((int) (((double)degrees/degPerRot) * ticksPerRev));
         this.drivetrain.turnRightPos(speed);
     }
 
-    public void turnLeftRots(int rotations, double speed){
-        this.drivetrain.resetMotors();
-        this.drivetrain.SetTargPos((int) (rotations * ticksPerRev));
-        this.drivetrain.turnLeftPos(speed);
+    private void waitUntilMove(){
+        while(this.drivetrain.fr.getMode() == DcMotor.RunMode.RUN_TO_POSITION && this.drivetrain.getCurrentPos() != this.drivetrain.getTargetPos()){
 
+        }
     }
-
 
 }
