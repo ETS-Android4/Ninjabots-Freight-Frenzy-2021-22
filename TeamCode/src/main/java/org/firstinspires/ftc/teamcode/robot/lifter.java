@@ -17,7 +17,7 @@ public class lifter {
     }
     public liftState state;
     public TouchSensor touch;
-    private int targetLiftPos = 430;
+    private int targetLiftPos = 455; // 430 was old
     private int targetDropPos = -55;
     private double LiftPow = 0.5;
     private double DropPow = -0.3;
@@ -70,13 +70,13 @@ public class lifter {
         else if (state == liftState.IDLE){
             motor.setTargetPosition(targetDropPos);
             motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            motor.setPower(-0.05);
+            motor.setPower(-0.02);
         }
 
         else if (state == liftState.INIT){
-            motor.setTargetPosition(-9999999);
+            motor.setTargetPosition(-500);
             motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            motor.setPower(-0.09);
+            motor.setPower(-0.08);
             //stall();
             if(touch.getValue() == 1.0){
                 targetDropPos = motor.getCurrentPosition();

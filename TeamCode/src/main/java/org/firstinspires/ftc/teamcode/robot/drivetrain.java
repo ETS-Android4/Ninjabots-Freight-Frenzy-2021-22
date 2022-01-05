@@ -11,6 +11,14 @@ import fi.iki.elonen.NanoHTTPD;
 
 
 public class drivetrain{
+    public enum driveState{
+        IDLE,
+        TELEOP,
+        DRIVING,
+        STRAFING,
+        TURNING_R,
+        TURNING_L
+    }
     public double crservopower;
     public double servpos;
     public DcMotor br;
@@ -23,6 +31,7 @@ public class drivetrain{
     public final double roundPow = 0.4;
     private final double leftOffset = 1.0;
     private DcMotor.RunMode mode;
+    public driveState state;
     public drivetrain(DcMotor.RunMode mode, HardwareMap hardwareMap){
         this.fl = hardwareMap.get(DcMotor.class, "fl");
         this.fr = hardwareMap.get(DcMotor.class, "fr");
@@ -34,8 +43,13 @@ public class drivetrain{
         this.fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        this.state = driveState.IDLE;
         this.mode = mode;
         setMode();
+        this.bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //this.bl.setDirection(DcMotorSimple.Direction.REVERSE);
         this.br.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -71,6 +85,8 @@ public class drivetrain{
     }
     public void StrafeLeft(){
         setMode();
+        setState(driveState.TELEOP);
+
         this.blpow = this.frontpow;
         this.flpow = this.backpow;
         this.frpow = this.frontpow;
@@ -80,6 +96,8 @@ public class drivetrain{
 
     public void StrafeRight(){
         setMode();
+        setState(driveState.TELEOP);
+
         this.blpow = this.backpow;
         this.flpow = this.frontpow;
         this.frpow = this.backpow;
@@ -89,6 +107,8 @@ public class drivetrain{
 
     private void SetPower(){
         setMode();
+        setState(driveState.TELEOP);
+
         this.fl.setPower(Math.round(this.flpow/roundPow)*roundPow * leftOffset);
         this.br.setPower(Math.round(this.brpow/roundPow)*roundPow);
         this.bl.setPower(Math.round(this.blpow/roundPow)*roundPow * leftOffset);
@@ -96,6 +116,7 @@ public class drivetrain{
     }
     public void SetPower(double g1power, double g2power) {
         setMode();
+        setState(driveState.TELEOP);
         this.blpow = g1power;
         this.flpow = g1power;
         this.frpow = g2power;
@@ -109,6 +130,7 @@ public class drivetrain{
         this.frpow = 0;
         this.brpow = 0;
         SetPower();
+        setState(driveState.IDLE);
         resetMotors();
 
 
@@ -132,6 +154,7 @@ public class drivetrain{
         br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         fr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        setState(driveState.DRIVING);
 
         bl.setPower(power);
         br.setPower(power);
@@ -143,6 +166,7 @@ public class drivetrain{
         br.setTargetPosition(-br.getTargetPosition());
         fl.setTargetPosition(-fl.getTargetPosition());
 
+        setState(driveState.STRAFING);
         bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -156,9 +180,11 @@ public class drivetrain{
 
     }
     public void strafeRightPos(double power){
+
         bl.setTargetPosition(-bl.getTargetPosition());
         fr.setTargetPosition(-fr.getTargetPosition());
 
+        setState(driveState.STRAFING);
         bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -175,6 +201,7 @@ public class drivetrain{
         bl.setTargetPosition(-bl.getTargetPosition());
         fl.setTargetPosition(-fl.getTargetPosition());
 
+        setState(driveState.TURNING_L);
         bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -189,6 +216,7 @@ public class drivetrain{
         br.setTargetPosition(-br.getTargetPosition());
         fr.setTargetPosition(-fr.getTargetPosition());
 
+        setState(driveState.TURNING_R);
         bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -201,5 +229,78 @@ public class drivetrain{
     }
     public int getCurrentPos(){return fr.getCurrentPosition();}
     public int getTargetPos(){return fr.getTargetPosition();}
+    public void setState(driveState newState){this.state = newState;}
+    public driveState getState(){return this.state;}
+    private double getPower(){return fr.getPower();}
+    public void adjustPow(double correction, double currentPow){
+        fr.setPower(fr.getPower() + correction);
+        br.setPower(br.getPower() + correction);
+        fl.setPower(fl.getPower() - correction);
+        bl.setPower(bl.getPower() - correction);
 
+    }
+    public double[] getAllPow(){
+        return new double[]{fl.getPower(), fr.getPower(), br.getPower(), bl.getPower()};
+    }
+    public boolean isStoppedPos(){
+        return !br.isBusy() || !fr.isBusy() || !bl.isBusy() || !fl.isBusy();
+    }
+    public void adjustPowAll(double inc){
+        if(br.getPower() < 0){
+            br.setPower(br.getPower() + inc);
+        }
+        else{
+            br.setPower(br.getPower() - inc);
+        }
+
+        if(fr.getPower() < 0){
+            fr.setPower(fr.getPower() + inc);
+        }
+        else{
+            fr.setPower(fr.getPower() - inc);
+        }
+
+        if(fl.getPower() < 0){
+            fl.setPower(fl.getPower() + inc);
+        }
+        else{
+            fl.setPower(fl.getPower() - inc);
+        }
+
+        if(bl.getPower() < 0){
+            bl.setPower(bl.getPower() + inc);
+        }
+        else{
+            bl.setPower(bl.getPower() - inc);
+        }
+    }
+    public void floorPow(double minPow){
+        if(br.getPower() < 0){
+            br.setPower(Math.min(-minPow, br.getPower()));
+        }
+        else{
+            br.setPower(Math.max(minPow, br.getPower()));
+        }
+
+        if(fr.getPower() < 0){
+            fr.setPower(Math.min(-minPow, fr.getPower()));
+        }
+        else{
+            fr.setPower(Math.max(minPow, fr.getPower()));
+        }
+
+        if(fl.getPower() < 0){
+            fl.setPower(Math.min(-minPow, fl.getPower()));
+        }
+        else{
+            fl.setPower(Math.max(minPow, fl.getPower()));
+        }
+
+        if(bl.getPower() < 0){
+            bl.setPower(Math.min(-minPow, bl.getPower()));
+        }
+        else{
+            bl.setPower(Math.max(minPow, bl.getPower()));
+        }
+    }
 }

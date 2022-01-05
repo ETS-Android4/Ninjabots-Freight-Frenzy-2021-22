@@ -11,7 +11,7 @@ public class Camera {
     // Initialize USB Camera
     public OpenCvWebcam webcam;
     private int cameraMonitorViewId;
-    private CameraPipeline pipeline;
+    public CameraPipeline pipeline;
     private int average1;
     private int average2;
     private int average3;

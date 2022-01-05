@@ -33,12 +33,16 @@ public class CycleTest extends LinearOpMode {
                 ninjabot.lifter.liftToTop();
             }
             if(gamepad1.dpad_down){
+                ninjabot.cradle.closeGate();
                 ninjabot.lifter.dropDown();
             }
             else if (gamepad1.dpad_up){
                 ninjabot.lifter.liftToTop();
             }
             ninjabot.lifter.update();
+            if(ninjabot.lifter.state == lifter.liftState.IDLE){
+                ninjabot.cradle.openGate();
+            }
 
         }
     }

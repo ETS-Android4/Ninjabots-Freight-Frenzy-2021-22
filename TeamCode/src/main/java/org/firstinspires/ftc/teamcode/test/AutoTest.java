@@ -35,12 +35,13 @@ public class AutoTest extends LinearOpMode {
             telemetry.update();
 
         }
-
         waitForStart();
-        robot.MoveTank(1, 0.5);
-        robot.MoveTank(-1, 0.5);
-        robot.StrafeRight(1, 0.5);
-        robot.StrafeLeft(1, 0.5);
-        robot.turnLeft(90, 0.5);
+
+        robot.MoveTank(24, 0.5, telemetry);
+        robot.MoveTank(-24, 0.5, telemetry);
+        robot.StrafeRight(24, 0.5, telemetry);
+        robot.StrafeLeft(24, 0.5, telemetry);
+        robot.turnLeft(90, 0.5, telemetry);
+        robot.stop(telemetry);
     }
 }

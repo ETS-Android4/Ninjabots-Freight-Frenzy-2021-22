@@ -12,6 +12,7 @@ public class intake {
     public intake(HardwareMap hw){
         this.intakeMotor = hw.get(DcMotor.class, "intake");
         this.intakeMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        this.intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         baseIntensity = 0;
     }
     public void runIntake(){
