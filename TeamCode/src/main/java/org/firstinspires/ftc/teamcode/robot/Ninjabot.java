@@ -27,6 +27,7 @@ public class Ninjabot {
     private double GateTolerance = 0.09;
     private double currentTargDeg = 0;
     private double robotCurrentPow = 0.0;
+    public grasper grasper;
 
     public Ninjabot(DcMotor.RunMode runMode, HardwareMap hardwareMap){
         this.drivetrain = new drivetrain(runMode, hardwareMap);
@@ -40,10 +41,13 @@ public class Ninjabot {
         this.cradle.closeSwivel();
         this.cradle.closeGate();
         this.webcam = new Camera(hardwareMap);
+        this.grasper = new grasper(hardwareMap);
+
     }
 
     public void update(){
         this.lifter.update();
+        this.grasper.update();
     }
     public void MoveTank(int inches, double speed, Telemetry telemetry){
         robotCurrentPow = speed;
@@ -92,7 +96,7 @@ public class Ninjabot {
     public void stop(Telemetry tele){waitUntilMove(tele);}
     private void waitUntilMove(Telemetry telemetry){
         while(this.drivetrain.fr.getMode() == DcMotor.RunMode.RUN_TO_POSITION &&!this.drivetrain.isStoppedPos()){
-            this.lifter.update();
+            this.update();
             if(this.drivetrain.getState() == org.firstinspires.ftc.teamcode.robot.drivetrain.driveState.DRIVING){
                 double correction = this.imu.checkDirection();
                 this.drivetrain.adjustPow(correction, robotCurrentPow);
@@ -151,22 +155,23 @@ public class Ninjabot {
     }
     public void waitForLifter(){
         while(this.lifter.getState() == org.firstinspires.ftc.teamcode.robot.lifter.liftState.LIFTING && this.lifter.getMotorCurrentPos() != this.lifter.getCurrentTargetPos()){
-            this.lifter.update();
+            this.update();
         }
         while(this.lifter.getState() == org.firstinspires.ftc.teamcode.robot.lifter.liftState.DROPPING && this.lifter.getMotorCurrentPos() != this.lifter.getCurrentTargetPos()){
-            this.lifter.update();
+            this.update();
         }
     }
     public void waitForGate(){
         while(Math.abs(this.cradle.getTargetPos() - this.cradle.getGatePos()) > GateTolerance){
-            this.lifter.update();
+            this.update();
         }
     }
     public void waitForTT(){
         ElapsedTime time = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
         time.reset();
         while(time.milliseconds() < 4300){
-            this.lifter.update();
+            this.update();
+            this.turnTable.setPower();
         }
     }
     public imu getImu(){return this.imu;}

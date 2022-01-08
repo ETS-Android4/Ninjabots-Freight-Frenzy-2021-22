@@ -31,8 +31,8 @@ public class CradleTest extends LinearOpMode {
             else if(gamepad1.y){
                 ninjabot.cradle.decClosePos(0.000005);
             }
-            telemetry.addData("Grasper Open: ",  ninjabot.cradle.GRASPER_OPEN);
-            telemetry.addData("Grasper Close: ",  ninjabot.cradle.GRASPER_CLOSE);
+            telemetry.addData("Grasper Open: ",  ninjabot.cradle.GATE_OPEN);
+            telemetry.addData("Grasper Close: ",  ninjabot.cradle.GATE_CLOSE);
             telemetry.addData("Current: ",  ninjabot.cradle.getGatePos());
             telemetry.update();
 

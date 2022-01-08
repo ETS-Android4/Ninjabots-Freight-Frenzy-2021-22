@@ -63,10 +63,21 @@ public class TeleOp extends OpMode {
             Ninjabot.cradle.openGate();
         }
 
-        //Auto Lift Testing
-        //if(Ninjabot.cradle.getGatePos() == Ninjabot.cradle.GRASPER_CLOSE && Ninjabot.lifter.getState() == lifter.liftState.IDLE){
-        //    Ninjabot.lifter.liftToTop();
-        //}
+        if(gamepad2.a){
+            Ninjabot.grasper.liftTo1();
+        }
+        else if (gamepad2.b){
+            Ninjabot.grasper.liftTo2();
+        }
+        else if (gamepad2.x){
+            Ninjabot.grasper.dropDown();
+        }
+        if(gamepad2.right_trigger > 0.3){
+            Ninjabot.grasper.openGate();
+        }
+        else if (gamepad2.left_trigger > 0.3){
+            Ninjabot.grasper.closeGate();
+        }
 
 
         Ninjabot.update();
